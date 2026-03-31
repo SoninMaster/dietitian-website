@@ -569,17 +569,15 @@
             background: var(--sand);
         }
 
-        .food-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+        .food-intro {
+            max-width: 680px;
+            margin-bottom: 3.5rem;
         }
 
-        .food-text p {
+        .food-intro p {
             color: var(--text-mid);
-            font-size: 1.02rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            margin-bottom: 1.2rem;
         }
 
         .food-tags {
@@ -601,36 +599,78 @@
         .food-tag:nth-child(2) { background: var(--gold-light); color: #8a6d2f; }
         .food-tag:nth-child(3) { background: var(--sand-dark); color: var(--text-mid); }
 
-        .food-visual {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        .food-gallery {
+            columns: 3;
+            column-gap: 1rem;
         }
 
-        .food-card {
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            font-size: 2.5rem;
-            background: var(--warm-white);
-            border: 1px solid var(--sand-dark);
-            transition: transform 0.3s;
+        .food-gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
         }
 
-        .food-card:hover { transform: translateY(-3px); }
-
-        .food-card:nth-child(2) { transform: translateY(1.5rem); }
-        .food-card:nth-child(3) { transform: translateY(-1.5rem); }
-        .food-card:nth-child(2):hover { transform: translateY(calc(1.5rem - 3px)); }
-        .food-card:nth-child(3):hover { transform: translateY(calc(-1.5rem - 3px)); }
-
-        .food-card-label {
-            font-size: 0.78rem;
-            color: var(--text-light);
-            margin-top: 0.8rem;
-            font-weight: 400;
-            letter-spacing: 0.03em;
+        .food-gallery-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        .food-gallery-item:hover img {
+            transform: scale(1.04);
+        }
+
+        .food-gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.04);
+            pointer-events: none;
+        }
+
+        /* lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            object-fit: contain;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.4);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2rem;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            line-height: 1;
+        }
+
+        .lightbox-close:hover { opacity: 1; }
 
         /* ─── KONTAKT ─── */
         .contact {
@@ -807,6 +847,8 @@
 
             .about-photo { max-height: 320px; }
 
+            .food-gallery { columns: 2; }
+
             .btn-ghost {
                 margin-left: 0;
                 margin-top: 0.8rem;
@@ -829,11 +871,7 @@
 
         @media (max-width: 550px) {
             section { padding: 4rem 1.5rem; }
-            .food-visual { grid-template-columns: 1fr 1fr; }
-            .food-card:nth-child(2),
-            .food-card:nth-child(3) { transform: none; }
-            .food-card:nth-child(2):hover,
-            .food-card:nth-child(3):hover { transform: translateY(-3px); }
+            .food-gallery { columns: 1; }
         }
     </style>
 </head>
@@ -1013,39 +1051,38 @@
 <!-- CO JEDZĄ MOI PACJENCI -->
 <section class="food" id="co-jedza">
     <div class="section-inner">
-        <div class="food-layout">
-            <div class="food-text fade-in">
-                <p class="section-label">Co jedzą moi pacjenci</p>
-                <h2 class="section-title">Dania są prostsze niż myślisz</h2>
-                <p>Aby jedzenie miało dla nas wartość terapeutyczną, nasze wybory muszą być konsekwentnie powtarzane z&nbsp;dnia na dzień, wręcz utrwalone.</p>
-                <p>Aby tak było, aby ta dieta stała się stylem życia, musi być smaczna i&nbsp;łatwa w&nbsp;przygotowaniu.</p>
-                <div class="food-tags">
-                    <span class="food-tag">Super food</span>
-                    <span class="food-tag">Smart cooking</span>
-                    <span class="food-tag">Zero waste</span>
-                </div>
+        <div class="food-intro fade-in">
+            <p class="section-label">Co jedzą moi pacjenci</p>
+            <h2 class="section-title">Dania są prostsze niż myślisz</h2>
+            <p>Aby jedzenie miało dla nas wartość terapeutyczną, nasze wybory muszą być konsekwentnie powtarzane z&nbsp;dnia na dzień, wręcz utrwalone. Aby tak było, aby ta dieta stała się stylem życia, musi być smaczna i&nbsp;łatwa w&nbsp;przygotowaniu.</p>
+            <div class="food-tags">
+                <span class="food-tag">Super food</span>
+                <span class="food-tag">Smart cooking</span>
+                <span class="food-tag">Zero waste</span>
             </div>
-            <div class="food-visual fade-in fade-in-delay-1">
-                <div class="food-card">
-                    🥑
-                    <div class="food-card-label">Wartość terapeutyczna</div>
-                </div>
-                <div class="food-card">
-                    🍲
-                    <div class="food-card-label">Smaczne i proste</div>
-                </div>
-                <div class="food-card">
-                    🥗
-                    <div class="food-card-label">Styl życia</div>
-                </div>
-                <div class="food-card">
-                    🫐
-                    <div class="food-card-label">Konsekwencja</div>
-                </div>
-            </div>
+        </div>
+        <div class="food-gallery">
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-12.png" alt="Przygotowywanie sushi" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-02.png" alt="Deser z jagodami i granatem" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-03.png" alt="Mus czekoladowy z pistacjami" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-04.png" alt="Zupa azjatycka z kolendrą" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-05.png" alt="Kanapka z łososiem i rukolą" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-06.png" alt="Pieczona czerwona kapusta z pomarańczą" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-07.png" alt="Miso ramen z jajkiem" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-08.png" alt="Pizza na pełnoziarnistym cieście" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-09.png" alt="Sushi z warzywami" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-10.png" alt="Pizza pokrojona z pomidorkami" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-11.png" alt="Rosół z makaronem" loading="lazy"></div>
+            <div class="food-gallery-item fade-in" onclick="openLightbox(this)"><img src="img/food-01.png" alt="Sushi roll z nori" loading="lazy"></div>
         </div>
     </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" aria-label="Zamknij">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+</div>
 
 <!-- KONTAKT -->
 <section class="contact" id="kontakt">
@@ -1119,6 +1156,23 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function openLightbox(el) {
+        const src = el.querySelector('img').src;
+        const lb = document.getElementById('lightbox');
+        document.getElementById('lightboxImg').src = src;
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
 
     function handleSubmit(e) {
         e.preventDefault();
