@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietetyk — Anna Kowalska</title>
+    <meta name="description" content="Profesjonalne konsultacje dietetyczne. Indywidualne plany żywieniowe dopasowane do Twoich potrzeb i celów.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sage: #7c9a72;
+            --sage-light: #a8c49f;
+            --sage-dark: #5a7a52;
+            --cream: #faf8f4;
+            --warm: #f3ede4;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --accent: #d4a574;
+            --accent-light: #e8cdb0;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        h1, h2, h3 {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.2rem 2rem;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(250, 248, 244, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--sage);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            transition: all 0.3s;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--sage-light) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+            opacity: 0.25;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--sage);
+            margin-bottom: 1.5rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid var(--sage-light);
+            border-radius: 50px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            max-width: 520px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--sage);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--sage-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(124, 154, 114, 0.3);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--text);
+            color: var(--text);
+            background: transparent;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background: var(--text);
+            color: var(--cream);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 7rem 2rem;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--sage);
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            color: var(--text-light);
+            max-width: 550px;
+            font-size: 1.05rem;
+            margin-bottom: 3.5rem;
+        }
+
+        /* ABOUT */
+        .about {
+            background: var(--white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-image {
+            aspect-ratio: 4/5;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--sage-light), var(--accent-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.02rem;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--warm);
+        }
+
+        .stat-number {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.2rem;
+            color: var(--sage);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+        }
+
+        /* SERVICES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 2.5rem;
+            border-radius: 16px;
+            background: var(--white);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+        }
+
+        .service-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: var(--warm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .service-price {
+            display: inline-block;
+            margin-top: 1.2rem;
+            font-weight: 500;
+            color: var(--sage);
+            font-size: 0.95rem;
+        }
+
+        /* PROCESS */
+        .process {
+            background: var(--white);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .step-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            color: var(--sage-light);
+            opacity: 0.6;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* TESTIMONIALS */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .testimonial-stars {
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial p {
+            font-size: 1.02rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+            text-align: center;
+            color: var(--white);
+            border-radius: 24px;
+            max-width: 1100px;
+            margin: 0 auto 5rem;
+            padding: 5rem 2rem;
+        }
+
+        .cta .section-label {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .cta .section-title {
+            color: var(--white);
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.85);
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.05rem;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--sage-dark);
+        }
+
+        .btn-white:hover {
+            background: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--warm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-item h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-item p, .contact-item a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.02rem;
+        }
+
+        .contact-item a:hover {
+            color: var(--sage);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border: 1.5px solid #e0ddd6;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            background: var(--white);
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--sage);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--sage);
+            text-decoration: none;
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--cream);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+
+            .hamburger {
+                display: flex;
+                z-index: 200;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-image {
+                max-height: 350px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                gap: 2rem;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 0.8rem;
+            }
+
+            .hero .btn-wrap {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">Anna Kowalska</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#o-mnie" onclick="closeMenu()">O mnie</a></li>
+            <li><a href="#uslugi" onclick="closeMenu()">Usługi</a></li>
+            <li><a href="#proces" onclick="closeMenu()">Jak pracuję</a></li>
+            <li><a href="#opinie" onclick="closeMenu()">Opinie</a></li>
+            <li><a href="#kontakt" onclick="closeMenu()">Kontakt</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-tag">Dietetyk kliniczny</span>
+        <h1>Zdrowie zaczyna się na talerzu</h1>
+        <p>Pomagam budować zdrowe nawyki żywieniowe, które zostają na całe życie. Indywidualne podejście, realne efekty.</p>
+        <div class="btn-wrap">
+            <a href="#kontakt" class="btn btn-primary">Umów wizytę</a>
+            <a href="#uslugi" class="btn btn-outline">Poznaj ofertę</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="o-mnie">
+    <div class="section-inner">
+        <div class="about-grid">
+            <div class="about-image fade-in">🥗</div>
+            <div class="about-text fade-in">
+                <p class="section-label">O mnie</p>
+                <h2 class="section-title">Cześć, jestem Anna</h2>
+                <p>Jestem dyplomowanym dietetykiem klinicznym z pasją do pomagania ludziom w osiąganiu ich celów zdrowotnych poprzez świadome odżywianie.</p>
+                <p>Wierzę, że dieta nie musi być nudna ani restrykcyjna. Moim celem jest stworzenie planu żywieniowego, który będzie smaczny, prosty w przygotowaniu i dopasowany do Twojego stylu życia.</p>
+                <div class="about-stats">
+                    <div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Zadowolonych pacjentów</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">8 lat</div>
+                        <div class="stat-label">Doświadczenia</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">1200+</div>
+                        <div class="stat-label">Planów żywieniowych</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section id="uslugi">
+    <div class="section-inner">
+        <p class="section-label">Usługi</p>
+        <h2 class="section-title">Czym mogę Ci pomóc?</h2>
+        <p class="section-desc">Każdy plan jest tworzony indywidualnie, z uwzględnieniem Twoich preferencji, alergii i celów zdrowotnych.</p>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">🎯</div>
+                <h3>Konsultacja wstępna</h3>
+                <p>Szczegółowy wywiad żywieniowy, analiza składu ciała i omówienie celów. Pierwszy krok do zmiany.</p>
+                <span class="service-price">od 150 zł</span>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">📋</div>
+                <h3>Plan żywieniowy</h3>
+                <p>Spersonalizowany jadłospis na 7 lub 14 dni z przepisami i listą zakupów. Smaczny i prosty.</p>
+                <span class="service-price">od 200 zł</span>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🔄</div>
+                <h3>Pakiet miesięczny</h3>
+                <p>Kompleksowa opieka: plan żywieniowy + wizyty kontrolne + wsparcie online między wizytami.</p>
+                <span class="service-price">od 400 zł</span>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🤰</div>
+                <h3>Dieta w ciąży</h3>
+                <p>Bezpieczne i zbilansowane żywienie dla przyszłych mam. Wsparcie w każdym trymestrze.</p>
+                <span class="service-price">od 250 zł</span>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🏋️</div>
+                <h3>Dieta sportowa</h3>
+                <p>Żywienie dopasowane do Twojego treningu. Optymalizacja wydolności i regeneracji.</p>
+                <span class="service-price">od 250 zł</span>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">💻</div>
+                <h3>Konsultacja online</h3>
+                <p>Pełna konsultacja przez wideorozmowę. Wygoda bez wychodzenia z domu.</p>
+                <span class="service-price">od 120 zł</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="proces">
+    <div class="section-inner">
+        <p class="section-label">Jak pracuję</p>
+        <h2 class="section-title">4 kroki do zdrowszego Ciebie</h2>
+        <p class="section-desc">Prosty i skuteczny proces, który prowadzi do trwałych rezultatów.</p>
+        <div class="process-steps">
+            <div class="step fade-in">
+                <div class="step-num">01</div>
+                <h3>Kontakt</h3>
+                <p>Napisz lub zadzwoń. Wspólnie ustalimy termin i formę wizyty.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-num">02</div>
+                <h3>Wywiad</h3>
+                <p>Poznaję Twoje nawyki, preferencje, stan zdrowia i cele.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-num">03</div>
+                <h3>Plan</h3>
+                <p>Tworzę indywidualny plan żywieniowy z przepisami i wskazówkami.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-num">04</div>
+                <h3>Wsparcie</h3>
+                <p>Monitoruję postępy i modyfikuję plan na bieżąco.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="opinie">
+    <div class="section-inner">
+        <p class="section-label">Opinie</p>
+        <h2 class="section-title">Co mówią moi pacjenci</h2>
+        <p class="section-desc">Realne opinie od osób, którym pomogłam zmienić nawyki żywieniowe.</p>
+        <div class="testimonials-grid">
+            <div class="testimonial fade-in">
+                <div class="testimonial-stars">★★★★★</div>
+                <p>„Anna podeszła do mojego problemu bardzo indywidualnie. Dzięki niej schudłam 12 kg bez uczucia głodu. Przepisy są pyszne i proste!"</p>
+                <div class="testimonial-author">— Marta K.</div>
+            </div>
+            <div class="testimonial fade-in">
+                <div class="testimonial-stars">★★★★★</div>
+                <p>„Jako sportowiec potrzebowałem planu, który wspiera moje treningi. Anna stworzyła idealnie dopasowany jadłospis. Polecam każdemu!"</p>
+                <div class="testimonial-author">— Tomek W.</div>
+            </div>
+            <div class="testimonial fade-in">
+                <div class="testimonial-stars">★★★★★</div>
+                <p>„Konsultacje online to strzał w dziesiątkę. Wygodnie, profesjonalnie i z pełnym zaangażowaniem. Najlepsza dietetyczka, do jakiej trafiłam."</p>
+                <div class="testimonial-author">— Kasia L.</div>
+            </div>
+            <div class="testimonial fade-in">
+                <div class="testimonial-stars">★★★★★</div>
+                <p>„Dzięki Annie nauczyłem się gotować zdrowo i smacznie. Plan był realistyczny i łatwy do wdrożenia. Efekty widać po pierwszym miesiącu."</p>
+                <div class="testimonial-author">— Piotr M.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<div style="padding: 0 2rem;">
+    <section class="cta fade-in">
+        <p class="section-label">Gotowa na zmianę?</p>
+        <h2 class="section-title">Zacznij swoją drogę do<br>zdrowszego życia</h2>
+        <p>Pierwsza konsultacja to bez zobowiązań. Porozmawiajmy o Twoich celach i sprawdźmy, jak mogę Ci pomóc.</p>
+        <a href="#kontakt" class="btn btn-white">Umów bezpłatną rozmowę</a>
+    </section>
+</div>
+
+<!-- CONTACT -->
+<section id="kontakt">
+    <div class="section-inner">
+        <p class="section-label">Kontakt</p>
+        <h2 class="section-title">Napisz do mnie</h2>
+        <p class="section-desc">Masz pytania? Chcesz umówić wizytę? Śmiało, odezwij się!</p>
+        <div class="contact-grid">
+            <div class="contact-info fade-in">
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <h4>Adres</h4>
+                        <p>ul. Zdrowa 12/3<br>00-001 Warszawa</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <h4>Telefon</h4>
+                        <a href="tel:+48123456789">+48 123 456 789</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <h4>Email</h4>
+                        <a href="mailto:anna@dietetyk.pl">anna@dietetyk.pl</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🕐</div>
+                    <div>
+                        <h4>Godziny przyjęć</h4>
+                        <p>Pon–Pt: 9:00–18:00<br>Sob: 9:00–14:00</p>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Imię i nazwisko</label>
+                    <input type="text" id="name" name="name" placeholder="Jan Kowalski" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="jan@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Wiadomość</label>
+                    <textarea id="message" name="message" placeholder="W czym mogę Ci pomóc?" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; text-align:center;">Wyślij wiadomość</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 Anna Kowalska — Dietetyk. Wszystkie prawa zastrzeżone.</p>
+</footer>
+
+<script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });
+
+    function closeMenu() {
+        navLinks.classList.remove('open');
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.textContent = 'Wysłano! ✓';
+        btn.style.background = 'var(--sage-dark)';
+        setTimeout(() => {
+            btn.textContent = 'Wyślij wiadomość';
+            btn.style.background = '';
+            e.target.reset();
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
